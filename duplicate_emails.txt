@@ -1,0 +1,56 @@
+mysql> USE leetcode;
+Database changed
+mysql> CREATE TABLE Person(
+    -> id INT PRIMARY KEY,
+    -> email VARCHAR(255)
+    -> );
+ERROR 1050 (42S01): Table 'person' already exists
+mysql> DROP TABLE Person;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE Person(
+    -> id INT PRIMARY KEY,
+    -> email VARCHAR(255)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Person(id,email)
+    -> VALUES
+    -> (1,'a@b.com'),
+    -> (2,'c@d.com'),
+    -> (3,'a@b.com');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Person;
++----+---------+
+| id | email   |
++----+---------+
+|  1 | a@b.com |
+|  2 | c@d.com |
+|  3 | a@b.com |
++----+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT email as Email
+    -> FROM Person
+    -> GROUP BY email
+    -> HAVING COUNT(*) > 1;
++---------+
+| Email   |
++---------+
+| a@b.com |
++---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM person;
++----+---------+
+| id | email   |
++----+---------+
+|  1 | a@b.com |
+|  2 | c@d.com |
+|  3 | a@b.com |
++----+---------+
+3 rows in set (0.00 sec)
+
+mysql> NOTEE;

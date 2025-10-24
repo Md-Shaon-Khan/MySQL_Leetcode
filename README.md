@@ -1,33 +1,39 @@
-# MySQL_Leetcode
-MySQL_LeetCode
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MySQL_LeetCode</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 700px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        ul {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
 
-A collection of optimized MySQL solutions for LeetCode database problems. Each query is well-documented and organized by difficulty, designed for practice, learning, and interview preparation.
+    <h1>MySQL_LeetCode</h1>
+    <p>This repository contains a collection of <strong>MySQL solutions</strong> for LeetCode database problems. Each query is written clearly with explanations to help you learn and practice SQL effectively.</p>
 
-Features
+    <h2>Types of Problems Included</h2>
+    <ul>
+        <li>Basic SELECT and filtering queries</li>
+        <li>JOINs (INNER, LEFT, RIGHT, FULL)</li>
+        <li>GROUP BY and aggregate functions</li>
+        <li>Subqueries and nested queries</li>
+        <li>Window functions and ranking queries</li>
+        <li>Data manipulation (INSERT, UPDATE, DELETE)</li>
+        <li>Complex conditional queries</li>
+        <li>Optimized solutions for large datasets</li>
+    </ul>
 
-Solutions categorized by Easy, Medium, Hard
-
-Step-by-step explanations for understanding query logic
-
-Efficient queries suitable for large datasets
-
-Ideal for SQL practice and technical interview prep
-
-Getting Started
-
-Clone the repository:
-
-git clone https://github.com/yourusername/MySQL_LeetCode.git
-
-
-Open SQL files in your preferred client.
-
-Run scripts and study the explanations to improve your skills.
-
-Contributing
-
-Contributions are welcome: add solutions, optimize queries, or improve documentation. Submit via pull request with a clear description.
-
-License
-
-Open-source for learning and educational use.
+</body>
+</html>

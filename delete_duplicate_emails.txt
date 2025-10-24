@@ -1,0 +1,57 @@
+mysql> use leetcode
+Database changed
+mysql> use leetcode;
+Database changed
+mysql> DROP TABLE IF EXISTS Person;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Person(
+    -> id INT PRIMARY KEY,
+    -> email VARCHAR(255)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Person (id, email) VALUES
+    -> (1, 'john@example.com'),
+    -> (2, 'bob@example.com'),
+    -> (3, 'john@example.com');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Person;
++----+------------------+
+| id | email            |
++----+------------------+
+|  1 | john@example.com |
+|  2 | bob@example.com  |
+|  3 | john@example.com |
++----+------------------+
+3 rows in set (0.00 sec)
+
+mysql> DELETE FROM Person
+    -> WHERE id NOT IN(
+    -> SELECT MIN(id)
+    -> FROM Person
+    -> GROUP BY email
+    -> );
+ERROR 1093 (HY000): You can't specify target table 'Person' for update in FROM clause
+mysql> DELETE FROM Person
+    -> WHERE id NOT IN (
+    ->   SELECT id FROM (
+    ->     SELECT MIN(id) AS id
+    ->     FROM Person
+    ->     GROUP BY email
+    ->   ) AS temp
+    -> );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Person;
++----+------------------+
+| id | email            |
++----+------------------+
+|  1 | john@example.com |
+|  2 | bob@example.com  |
++----+------------------+
+2 rows in set (0.00 sec)
+
+mysql> notee;

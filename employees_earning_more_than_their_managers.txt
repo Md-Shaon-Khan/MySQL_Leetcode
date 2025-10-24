@@ -1,0 +1,52 @@
+mysql> use leetcode;
+Database changed
+mysql> CREATE TABLE Employee(
+    -> id INT PRIMARY KEY,
+    -> name VARCHAR(255),
+    -> salary INT,
+    -> managerId INT DEFAULT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Employee (id,name,salary,managerId)
+    -> VALUES
+    -> (1,'Joe',70000,3),
+    -> (2,'Shaon',80000,4),
+    -> (3,'Sam',50000),
+    -> (4,'Max',75000);
+ERROR 1136 (21S01): Column count doesn't match value count at row 3
+mysql> INSERT INTO Employee (id, name, salary, managerId)
+    -> VALUES
+    -> (1, 'Joe', 70000, 3),
+    -> (2, 'Shaon', 80000, 4),
+    -> (3, 'Sam', 50000, NULL),
+    -> (4, 'Max', 75000, NULL);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Employee;
++----+-------+--------+-----------+
+| id | name  | salary | managerId |
++----+-------+--------+-----------+
+|  1 | Joe   |  70000 |         3 |
+|  2 | Shaon |  80000 |         4 |
+|  3 | Sam   |  50000 |      NULL |
+|  4 | Max   |  75000 |      NULL |
++----+-------+--------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT 
+    -> e.name AS Employee
+    -> FROM Employee e
+    -> JOIN Employee m
+    -> ON e.managerID = m.id
+    -> WHERE e.salary > m.salary;
++----------+
+| Employee |
++----------+
+| Joe      |
+| Shaon    |
++----------+
+2 rows in set (0.00 sec)
+
+mysql> notee;

@@ -1,0 +1,72 @@
+mysql> CREATE DATABASE leetcode;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE leetcode;
+Database changed
+mysql> CREATE TABLE Person(
+    -> personID INT PRIMARY KEY,
+    -> lastName VARCHAR(255),
+    -> firstName VARCHAR(255)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE Address(
+    -> addressId INT PRIMARY KEY,
+    -> personId INT,
+    -> city VARCHAR(255),
+    -> state VARCHAR(255)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Person(personId,lastName,firstName)
+    -> VALUES
+    -> (1,'Wang','Allen'),
+    -> (2,'Alice','Bob');
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Address(addressId,personId,city,state)
+    -> VALUES
+    -> (1,2,'New York City','New York'),
+    -> (2,3,'Leetcode','California');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Person'
+    '> ;
+    '> ^C
+mysql> SELECT * FROM Person;
++----------+----------+-----------+
+| personID | lastName | firstName |
++----------+----------+-----------+
+|        1 | Wang     | Allen     |
+|        2 | Alice    | Bob       |
++----------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Address;
++-----------+----------+---------------+------------+
+| addressId | personId | city          | state      |
++-----------+----------+---------------+------------+
+|         1 |        2 | New York City | New York   |
+|         2 |        3 | Leetcode      | California |
++-----------+----------+---------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT 
+    -> p.firstName,
+    -> p.lastName,
+    -> a.city,
+    -> a.state
+    -> FROM Person p
+    -> LEFT JOIN Address a
+    -> ON p.personId = a.personId;
++-----------+----------+---------------+----------+
+| firstName | lastName | city          | state    |
++-----------+----------+---------------+----------+
+| Allen     | Wang     | NULL          | NULL     |
+| Bob       | Alice    | New York City | New York |
++-----------+----------+---------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> notee;

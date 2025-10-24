@@ -1,0 +1,48 @@
+mysql> DROP TABLE IF EXISTS Customer;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> CREATE TABLE Customer(
+    -> id INT PRIMARY KEY,
+    -> name VARCHAR(255),
+    -> referee_id INT
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Customer (id, name, referee_id) VALUES
+    -> (1, 'Will', NULL),
+    -> (2, 'Jane', NULL),
+    -> (3, 'Alex', 2),
+    -> (4, 'Bill', NULL),
+    -> (5, 'Zack', 1),
+    -> (6, 'Mark', 2);
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Customer;
++----+------+------------+
+| id | name | referee_id |
++----+------+------------+
+|  1 | Will |       NULL |
+|  2 | Jane |       NULL |
+|  3 | Alex |          2 |
+|  4 | Bill |       NULL |
+|  5 | Zack |          1 |
+|  6 | Mark |          2 |
++----+------+------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT 
+    -> name
+    -> FROM Customer
+    -> WHERE 
+    -> referee_id <> 2 OR referee_id IS NULL;
++------+
+| name |
++------+
+| Will |
+| Jane |
+| Bill |
+| Zack |
++------+
+4 rows in set (0.00 sec)
+

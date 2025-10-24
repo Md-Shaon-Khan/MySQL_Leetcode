@@ -46,3 +46,4 @@ mysql> SELECT
 +------+
 4 rows in set (0.00 sec)
 
+mysql> tee F:/MySQL Leetcode/delete_duplicate_emails.txt;

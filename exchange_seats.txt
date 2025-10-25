@@ -1,0 +1,51 @@
+mysql> USE leetcode;
+Database changed
+mysql> CREATE TABLE Seat (
+    ->   id INT PRIMARY KEY,
+    ->   student VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> 
+mysql> INSERT INTO Seat (id, student) VALUES
+    -> (1, 'Abbot'),
+    -> (2, 'Doris'),
+    -> (3, 'Emerson'),
+    -> (4, 'Green'),
+    -> (5, 'Jeames');
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT 
+    ->     CASE 
+    ->         WHEN id % 2 = 0 THEN id - 1
+    ->         WHEN id % 2 = 1 AND id < (SELECT MAX(id) FROM Seat) THEN id + 1
+    ->         ELSE id
+    ->     END AS id,
+    ->     student
+    -> FROM Seat
+    -> ORDER BY id;
++----+---------+
+| id | student |
++----+---------+
+|  1 | Doris   |
+|  2 | Abbot   |
+|  3 | Green   |
+|  4 | Emerson |
+|  5 | Jeames  |
++----+---------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT * FROM Seat;
++----+---------+
+| id | student |
++----+---------+
+|  1 | Abbot   |
+|  2 | Doris   |
+|  3 | Emerson |
+|  4 | Green   |
+|  5 | Jeames  |
++----+---------+
+5 rows in set (0.00 sec)
+
+mysql> notee;

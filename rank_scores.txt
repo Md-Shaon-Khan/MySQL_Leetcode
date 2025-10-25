@@ -1,0 +1,64 @@
+mysql> USE leetcode;
+Database changed
+mysql> CREATE TABLE Scores(
+    -> id INT PRIMARY KEY,
+    -> score FLOAT
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> INSERT INTO Scores(id,score)
+    -> VALUES
+    -> (1,3.50),
+    -> (2,3.65),
+    -> (3,4.00),
+    -> (4,3.85),
+    -> (5,4.00),
+    -> (6,3.65);
+Query OK, 6 rows affected (0.02 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Scores;
++----+-------+
+| id | score |
++----+-------+
+|  1 |   3.5 |
+|  2 |  3.65 |
+|  3 |     4 |
+|  4 |  3.85 |
+|  5 |     4 |
+|  6 |  3.65 |
++----+-------+
+6 rows in set (0.01 sec)
+
+mysql> SELECT id,score
+    -> FROM Scores
+    -> ORDER BY score DESC;
++----+-------+
+| id | score |
++----+-------+
+|  3 |     4 |
+|  5 |     4 |
+|  4 |  3.85 |
+|  2 |  3.65 |
+|  6 |  3.65 |
+|  1 |   3.5 |
++----+-------+
+6 rows in set (0.01 sec)
+
+mysql> SELECT 
+    ->     score,
+    -> DENSE_RANK() OVER (ORDER BY score DESC) AS `rank`
+    -> FROM Scores;
++-------+------+
+| score | rank |
++-------+------+
+|     4 |    1 |
+|     4 |    1 |
+|  3.85 |    2 |
+|  3.65 |    3 |
+|  3.65 |    3 |
+|   3.5 |    4 |
++-------+------+
+6 rows in set (0.01 sec)
+
+mysql> notee;

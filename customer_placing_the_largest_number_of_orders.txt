@@ -1,0 +1,86 @@
+mysql> USE leetcode;
+Database changed
+mysql> CREATE TABLE Orders(
+    -> order_number INT PRIMARY KEY,
+    -> customer_number INT
+    -> );
+ERROR 1050 (42S01): Table 'orders' already exists
+mysql> EXIST TABLE Orders;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'EXIST TABLE Orders' at line 1
+mysql> DROP TABLE IF EXISTS Orders;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> CREATE TABLE Orders(
+    -> order_number INT PRIMARY KEY,
+    -> customer_number INT
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO Orders (order_number, customer_number) VALUES
+    -> (1, 1),
+    -> (2, 2),
+    -> (3, 3),
+    -> (4, 3);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| iit_14             |
+| iit_student_db     |
+| information_schema |
+| lab2               |
+| leetcode           |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+9 rows in set (0.01 sec)
+
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_leetcode |
++--------------------+
+| activity           |
+| address            |
+| bonus              |
+| customer           |
+| customers          |
+| employee           |
+| orders             |
+| person             |
+| scores             |
+| seat               |
+| teacher            |
+| weather            |
+| world              |
++--------------------+
+13 rows in set (0.01 sec)
+
+mysql> SELECT * FROM Orders;
++--------------+-----------------+
+| order_number | customer_number |
++--------------+-----------------+
+|            1 |               1 |
+|            2 |               2 |
+|            3 |               3 |
+|            4 |               3 |
++--------------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT customer_number
+    -> FROM Orders
+    -> GROUP BY customer_number
+    -> ORDER BY COUNT(order_number) DESC
+    -> LIMIT 1;
++-----------------+
+| customer_number |
++-----------------+
+|               3 |
++-----------------+
+1 row in set (0.01 sec)
+
+mysql> notee;

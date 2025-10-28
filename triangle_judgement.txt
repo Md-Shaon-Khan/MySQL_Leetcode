@@ -1,0 +1,60 @@
+mysql> USE leetcode;
+Database changed
+mysql> CREATE TABLE Triangle (
+    ->     x INT,
+    ->     y INT,
+    ->     z INT,
+    ->     PRIMARY KEY (x, y, z)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Triangle (x, y, z) VALUES
+    -> (3, 4, 5),
+    -> (1, 2, 3),
+    -> (5, 5, 5),
+    -> (2, 2, 5),
+    -> (6, 8, 10);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT
+    ->     x,
+    ->     y,
+    ->     z,
+    ->     CASE
+    ->         WHEN x + y > z AND y + z > x AND x + z > y THEN 'Yes'
+    ->         ELSE 'No'
+    ->     END AS is_triangle
+    -> FROM Triangle;
++---+---+----+-------------+
+| x | y | z  | is_triangle |
++---+---+----+-------------+
+| 1 | 2 |  3 | No          |
+| 2 | 2 |  5 | No          |
+| 3 | 4 |  5 | Yes         |
+| 5 | 5 |  5 | Yes         |
+| 6 | 8 | 10 | Yes         |
++---+---+----+-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->     x,
+    ->     y,
+    ->     z,
+    ->     CASE
+    ->         WHEN x + y > z AND y + z > x AND x + z > y THEN 'Yes'
+    ->         ELSE 'No'
+    ->     END AS triangle
+    -> FROM Triangle;
++---+---+----+----------+
+| x | y | z  | triangle |
++---+---+----+----------+
+| 1 | 2 |  3 | No       |
+| 2 | 2 |  5 | No       |
+| 3 | 4 |  5 | Yes      |
+| 5 | 5 |  5 | Yes      |
+| 6 | 8 | 10 | Yes      |
++---+---+----+----------+
+5 rows in set (0.00 sec)
+
+mysql> notee;

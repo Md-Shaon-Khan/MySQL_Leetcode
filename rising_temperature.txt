@@ -1,0 +1,47 @@
+mysql> use leetcode;
+Database changed
+mysql> CREATE TABLE Weather (
+    ->     id INT PRIMARY KEY,
+    ->     recordDate DATE,
+    ->     temperature INT
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO Weather (id, recordDate, temperature)
+    -> VALUES
+    -> (1, '2015-01-01', 10),
+    -> (2, '2015-01-02', 25),
+    -> (3, '2015-01-03', 20),
+    -> (4, '2015-01-04', 30);
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Weather;
++----+------------+-------------+
+| id | recordDate | temperature |
++----+------------+-------------+
+|  1 | 2015-01-01 |          10 |
+|  2 | 2015-01-02 |          25 |
+|  3 | 2015-01-03 |          20 |
+|  4 | 2015-01-04 |          30 |
++----+------------+-------------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT id
+    -> FROM (
+    ->     SELECT
+    ->         id,
+    ->         temperature,
+    ->         LAG(temperature) OVER (ORDER BY recordDate) AS prev_temp
+    ->     FROM Weather
+    -> ) AS t
+    -> WHERE temperature > prev_temp;
++----+
+| id |
++----+
+|  2 |
+|  4 |
++----+
+2 rows in set (0.02 sec)
+
+mysql> notee;

@@ -1,0 +1,103 @@
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| iit_14             |
+| iit_student_db     |
+| information_schema |
+| lab2               |
+| leetcode           |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> USE leetcode;
+Database changed
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_leetcode |
++--------------------+
+| activity           |
+| address            |
+| bonus              |
+| customer           |
+| customers          |
+| employee           |
+| orders             |
+| person             |
+| scores             |
+| seat               |
+| teacher            |
+| weather            |
+| world              |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Courses(
+    -> student VARCHAR(50),
+    -> class VARCHAR(50),
+    -> PRIMARY KEY(student,class)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Courses (student,class) VALUES
+    -> ('A','Math'),
+    -> ('B','English'),
+    -> ('C','Math'),
+    -> ('D','Biology'),
+    -> ('E','Math'),
+    -> ('F','Bangla'),
+    -> ('G','Math'),
+    -> ('H','Math'),
+    -> ('I','Physics');
+Query OK, 9 rows affected (0.01 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Courses;
++---------+---------+
+| student | class   |
++---------+---------+
+| A       | Math    |
+| B       | English |
+| C       | Math    |
+| D       | Biology |
+| E       | Math    |
+| F       | Bangla  |
+| G       | Math    |
+| H       | Math    |
+| I       | Physics |
++---------+---------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT class
+    -> FROM Courses
+    -> GROUP BY class
+    -> ORDER BY COUNT(student) DESC
+    -> HAVING COUNT(student) >=5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'HAVING COUNT(student) >=5' at line 5
+mysql> SELECT class, COUNT(student) AS total_students
+    -> FROM Courses
+    -> GROUP BY class
+    -> HAVING COUNT(student) >= 5;
++-------+----------------+
+| class | total_students |
++-------+----------------+
+| Math  |              5 |
++-------+----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT class
+    -> FROM Courses
+    -> GROUP BY class
+    -> HAVING COUNT(student) >= 5;
++-------+
+| class |
++-------+
+| Math  |
++-------+
+1 row in set (0.00 sec)
+
+mysql> notee;

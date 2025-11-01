@@ -1,0 +1,193 @@
+mysql> USE leetcode;
+Database changed
+mysql> CREATE TABLE Department (
+    ->     id INT PRIMARY KEY,
+    ->     name VARCHAR(50)
+    -> );
+ERROR 1050 (42S01): Table 'department' already exists
+mysql> 
+mysql> CREATE TABLE Employee (
+    ->     id INT PRIMARY KEY,
+    ->     name VARCHAR(50),
+    ->     salary INT,
+    ->     departmentId INT,
+    ->     FOREIGN KEY (departmentId) REFERENCES Department(id)
+    -> );
+ERROR 1050 (42S01): Table 'employee' already exists
+mysql> drop table Department;
+ERROR 3730 (HY000): Cannot drop table 'department' referenced by a foreign key constraint 'employeee_ibfk_1' on table 'employeee'.
+mysql> drop table employeee;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop table Department;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> Drop table employee;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Department (
+    ->     id INT PRIMARY KEY,
+    ->     name VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Employee (
+    ->     id INT PRIMARY KEY,
+    ->     name VARCHAR(50),
+    ->     salary INT,
+    ->     departmentId INT,
+    ->     FOREIGN KEY (departmentId) REFERENCES Department(id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO Department (id, name) VALUES
+    -> (1, 'IT'),
+    -> (2, 'Sales');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Employee (id, name, salary, departmentId) VALUES
+    -> (1, 'Joe', 85000, 1),
+    -> (2, 'Henry', 80000, 2),
+    -> (3, 'Sam', 60000, 2),
+    -> (4, 'Max', 90000, 1),
+    -> (5, 'Janet', 69000, 1),
+    -> (6, 'Randy', 85000, 1),
+    -> (7, 'Will', 70000, 1);
+Query OK, 7 rows affected (0.00 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Department;
++----+-------+
+| id | name  |
++----+-------+
+|  1 | IT    |
+|  2 | Sales |
++----+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Employee;
++----+-------+--------+--------------+
+| id | name  | salary | departmentId |
++----+-------+--------+--------------+
+|  1 | Joe   |  85000 |            1 |
+|  2 | Henry |  80000 |            2 |
+|  3 | Sam   |  60000 |            2 |
+|  4 | Max   |  90000 |            1 |
+|  5 | Janet |  69000 |            1 |
+|  6 | Randy |  85000 |            1 |
+|  7 | Will  |  70000 |            1 |
++----+-------+--------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT 
+    -> d.name AS Department,
+    -> e.name AS Employee,
+    -> e.salary AS Salary
+    -> FROM Employee e
+    -> JOIN Department d ON e.departmentId = d.id
+    -> JOIN(
+    -> SELECT
+    -> departmentId,
+    -> salary,
+    -> DENSE_RANK() OVER (PARTITION BY departmentID ORDER BY salary DESC) ASrnk
+    -> FROM Employee
+    -> ) AS ranked ON e.departmentId = ranked.departmentId
+    -> AND e.salary = ranked.salary
+    -> WHERE ranked.rnk <= 3
+    -> ORDER BY d.name,e.salary DESC;
+ERROR 1054 (42S22): Unknown column 'ranked.rnk' in 'where clause'
+mysql> SELECT
+    ->     d.name AS Department,
+    ->     e.name AS Employee,
+    ->     e.salary AS Salary
+    -> FROM Employee e
+    -> JOIN Department d ON e.departmentId = d.id
+    -> JOIN (
+    ->     SELECT
+    ->         departmentId,
+    ->         salary,
+    ->         DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) AS rnk
+    ->     FROM Employee
+    -> ) AS ranked ON e.departmentId = ranked.departmentId
+    ->             AND e.salary = ranked.salary
+    -> WHERE ranked.rnk <= 3
+    -> ORDER BY d.name, e.salary DESC;
++------------+----------+--------+
+| Department | Employee | Salary |
++------------+----------+--------+
+| IT         | Max      |  90000 |
+| IT         | Joe      |  85000 |
+| IT         | Randy    |  85000 |
+| IT         | Joe      |  85000 |
+| IT         | Randy    |  85000 |
+| IT         | Will     |  70000 |
+| Sales      | Henry    |  80000 |
+| Sales      | Sam      |  60000 |
++------------+----------+--------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->     d.name AS Department,
+    ->     e.name AS Employee,
+    ->     e.salary AS Salary
+    -> FROM Employee e
+    -> JOIN Department d ON e.departmentId = d.id
+    -> JOIN (
+    ->     SELECT
+    ->         departmentId,
+    ->         salary,
+    ->         DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) AS rnk
+    ->     FROM Employee
+    -> ) AS ranked
+    ->     ON e.departmentId = ranked.departmentId
+    ->     AND e.salary = ranked.salary
+    -> WHERE ranked.rnk <= 3
+    -> ORDER BY d.name, e.salary DESC;
++------------+----------+--------+
+| Department | Employee | Salary |
++------------+----------+--------+
+| IT         | Max      |  90000 |
+| IT         | Joe      |  85000 |
+| IT         | Randy    |  85000 |
+| IT         | Joe      |  85000 |
+| IT         | Randy    |  85000 |
+| IT         | Will     |  70000 |
+| Sales      | Henry    |  80000 |
+| Sales      | Sam      |  60000 |
++------------+----------+--------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->     d.name AS Department,
+    ->     e.name AS Employee,
+    ->     e.salary AS Salary
+    -> FROM Employee e
+    -> JOIN Department d ON e.departmentId = d.id
+    -> JOIN (
+    ->     SELECT
+    ->         departmentId,
+    ->         salary,
+    ->         DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) AS rnk
+    ->     FROM (
+    ->         SELECT DISTINCT departmentId, salary
+    ->         FROM Employee
+    ->     ) AS uniq_salaries
+    -> ) AS ranked
+    ->     ON e.departmentId = ranked.departmentId
+    ->     AND e.salary = ranked.salary
+    -> WHERE ranked.rnk <= 3
+    -> ORDER BY d.name, e.salary DESC;
++------------+----------+--------+
+| Department | Employee | Salary |
++------------+----------+--------+
+| IT         | Max      |  90000 |
+| IT         | Joe      |  85000 |
+| IT         | Randy    |  85000 |
+| IT         | Will     |  70000 |
+| Sales      | Henry    |  80000 |
+| Sales      | Sam      |  60000 |
++------------+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> notee;

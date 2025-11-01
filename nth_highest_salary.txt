@@ -1,0 +1,30 @@
+mysql> USE leetcode;
+Database changed
+mysql> DROP TABLE employee;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE Employee(
+    -> id INT PRIMARY KEY,
+    -> salary INT
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO Employee (id, salary)
+    -> VALUES 
+    -> (1, 100),
+    -> (2, 200),
+    -> (3, 300),
+    -> (4, 400),
+    -> (5, 500),
+    -> (6, 500); -- duplicate salary to test DISTINCT
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+
+--SELECT DISTINCT salary AS NthHighestSalary
+--FROM Employee
+--ORDER BY salary DESC
+--LIMIT 1 OFFSET 2;
+
+mysql> notee;
+

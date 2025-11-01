@@ -1,0 +1,32 @@
+mysql> USE leetcode;
+Database changed
+mysql> CREATE TABLE logs(
+    -> id INT PRIMARY KEY,
+    -> num INT);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO logs VALUES
+    -> (1,1),
+    -> (2,1),
+    -> (3,1),
+    -> (4,2),
+    -> (5,1),
+    -> (6,2),
+    -> (7,2);
+Query OK, 7 rows affected (0.01 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> SELECT DISTINCT l1.num AS ConsecutiveNums
+    -> FROM Logs l1
+    -> JOIN Logs l2 ON l1.id = l2.id - 1
+    -> JOIN Logs l3 ON l1.id = l3.id - 2
+    -> WHERE l1.num = l2.num 
+    ->   AND l2.num = l3.num;
++-----------------+
+| ConsecutiveNums |
++-----------------+
+|               1 |
++-----------------+
+1 row in set (0.01 sec)
+
+mysql> NOTEE;

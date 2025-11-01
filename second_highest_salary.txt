@@ -1,0 +1,85 @@
+mysql> USE leetcode;
+Database changed
+mysql> DROP TABLE IF EXISTS employee;
+ERROR 3730 (HY000): Cannot drop table 'employee' referenced by a foreign key constraint 'bonus_ibfk_1' on table 'bonus'.
+mysql> DROP TABLE bonus;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> DROP TABLE employee;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE employee(
+    -> id INT PRIMARY KEY,
+    -> salary INT
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO employee VALUES
+    -> (1,200),
+    -> (2,200),
+    -> (3,300);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+--------+
+| id | salary |
++----+--------+
+|  1 |    200 |
+|  2 |    200 |
+|  3 |    300 |
++----+--------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT * 
+    -> FROM employee
+    -> ORDER BY salary DESC;
++----+--------+
+| id | salary |
++----+--------+
+|  3 |    300 |
+|  1 |    200 |
+|  2 |    200 |
++----+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT salary as SecondHighestSalary
+    -> FROM employee
+    -> ORDER BY salary DESC
+    -> LIMIT 1,1;
++---------------------+
+| SecondHighestSalary |
++---------------------+
+|                 200 |
++---------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COALESCE(
+    -> (SELECT salary
+    -> FROM employee
+    -> ORDER BY salary DESC
+    -> LIMIT 1 OFFSET 1),
+    -> NULL
+    -> ) AS SecondHighestSalary;
++---------------------+
+| SecondHighestSalary |
++---------------------+
+|                 200 |
++---------------------+
+1 row in set (0.03 sec)
+
+mysql> SELECT COALESCE(
+    ->   (SELECT DISTINCT salary
+    ->    FROM Employee
+    ->    ORDER BY salary DESC
+    ->    LIMIT 1 OFFSET 1),
+    ->   NULL
+    -> ) AS SecondHighestSalary;
++---------------------+
+| SecondHighestSalary |
++---------------------+
+|                 200 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> notee;
